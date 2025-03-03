@@ -2,7 +2,7 @@
 // @name         「🍃CSDNGreener」 + ✨LDP✨
 // @description  🍀CSDNGreener with LateDreamPatch
 // @namespace    csdngreenerldp
-// @version      4.2.4+ldpatch.0
+// @version      4.2.4+ldpatch.0-hotfix.0
 // @author       LateDream
 // @connect      www.csdn.net
 // @include      *://*.csdn.net/*
@@ -17,7 +17,7 @@
 // @downloadURL https://dl.latedream.ggff.net/userscripts/csdngreenerldp.user.js
 // @updateURL https://dl.latedream.ggff.net/userscripts/csdngreenerldp.user.js
 // ==/UserScript==
-var version = "4.2.4+ldpatch.0";
+var version = "4.2.4+ldpatch.0-hotfix.0";
 var currentURL = window.location.href;
 if (currentURL.indexOf("?") !== -1) {
 	currentURL = currentURL.substring(0, currentURL.indexOf("?"));
@@ -150,7 +150,7 @@ $('head').append(`<style id="csdngreenerldp-preload-styles">
 		width: 40%;
 		height: 40%;
 		overflow: hidden;
-		z-index: 1000;
+		z-index: -1000;
 	}
 	.___window-header {
 		padding: 6px 6px 0;
@@ -183,11 +183,10 @@ $('head').append(`<style id="csdngreenerldp-preload-styles">
 		width: 100vw;
 		height: 100vh;
 		z-index: -1;
-		pointer-events: none;
 	}
 	.___icon {
-		width: 16px;
-		height: 16px;
+		width: 24px;
+		height: 24px;
 	}
 `);
 
@@ -218,7 +217,7 @@ var protect_svg = '<svg t="1629560538805" class="icon" viewBox="0 0 1024 1024" v
 	$("body").append(`<script id="csdngreener-preload">
 		function csdnGreenerShowConfig() {
 			$(window).scrollTop(0);
-			$('#csdngreenerldp-config').css('opacity', 1);
+			$('#csdngreenerldp-config').css('opacity', 1).css('z-index', 1000);
 			$('body').css('overflow', 'hidden');
 		}
 		function csdnGreenerSaveAndReload() {
@@ -930,7 +929,7 @@ function common(num, times) {
 						<input type="file" id="upload_bg" accept="image/*" /> -->
 						<input type="checkbox" role="switch" id="toggle-recommend-button"> <label for="toggle-recommend-button" class="modeLabel">显示推荐内容</label><br>
 						<input type="checkbox" role="switch" id="toggle-shop-button"> <label for="toggle-shop-button" class="modeLabel">显示小店</label><br>
-						<input type="checkbox" role="switch" id="toggle-autosize-button"> <label for="toggle-autosize-button" class="modeLabel">宽度自动适应<br><span style="color: #808080;"># 选项作用：开启此选项可以在页面宽度缩小时自动切换至小屏模式</span></label><br>
+						<input type="checkbox" role="switch" id="toggle-autosize-button"> <label for="toggle-autosize-button" class="modeLabel">宽度自动适应&emsp;<span style="color: #808080;"># 选项作用：开启此选项可以在页面宽度缩小时自动切换至小屏模式</span></label><br>
 						<input type="checkbox" role="switch" id="toggle-autohidetoolbar-button"> <label for="toggle-autohidetoolbar-button" class="modeLabel">向下滚动自动隐藏顶栏</label><br>
 						<input type="checkbox" role="switch" id="toggle-autohidebottombar-button"> <label for="toggle-autohidebottombar-button" class="modeLabel">始终隐藏底栏</label><br>
 						<input type="checkbox" role="switch" id="toggle-writeblog-button"> <label for="toggle-writeblog-button" class="modeLabel">显示发布按钮</label><br>
@@ -1342,11 +1341,12 @@ function common(num, times) {
 			let picoCssCookie = config.get("injectPicoCss", true);
 			if(picoCssCookie) {
 				$('head').append('<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/picocss/2.0.6/pico.min.css" integrity="sha512-UXfikgakSZBii5lkvmDCRO+IYWQhTtwMOJ+3EmGEA+oA82kvbSskgw3OI16Jx1kINgF8aqOkYE+c9h4m6muONg==" crossorigin="anonymous" referrerpolicy="no-referrer" />');
-				$('head').append(`<style id="csdngreenerldp-pico-style-adjust">#csdn-toolbar, main * {background-color: var(--pico-background-color) !important; color: var(--pico-color) !important;} 
+				$('head').append(`<style id="csdngreenerldp-pico-style-adjust">#csdn-toolbar, main *:not(code):not(pre) {background-color: var(--pico-background-color) !important; color: var(--pico-color) !important;} 
 
 					#blogColumnPayAdvert .column-group-item, #blogHuaweiyunAdvert .column-group-item {border-color: var(--pico-primary-border);}
 
-				body {background-color: transparent;}</style>`);
+				body {background-color: transparent;}
+				::marker {display: none; font-size: 0 !important;}</style>`);
 				$("#ldptoggle-injectpicocss").prop("checked", true);
 			} else {
 				$("#ldptoggle-injectpicocss").prop("checked", false);
